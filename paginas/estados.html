@@ -7,9 +7,9 @@
     <script>
         var estados = [];
 
-        $(document).ready(
-            CarregarEstados()
-        );
+        $(document).ready( function(){ 
+            CarregarEstados();
+        });
 
         function CarregarEstados() {
             var urlServico = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados';
@@ -29,9 +29,10 @@
                         var colunaID = "<td>"+ id +"</td>";
                         var colunaSIGLA = "<td>"+ sigla +"</td>";
                         var colunaNOME = "<td>"+ nome +"</td>";
+                        var colunaACAO = "<td><button id='btnTestar' type='button' onclick='Buscar("+ id +");'>Buscar</button></td>";
                         var linhaFIM = "</tr>";
 
-                        var linha = linhaINI + colunaID + colunaSIGLA + colunaNOME + linhaFIM;
+                        var linha = linhaINI + colunaID + colunaSIGLA + colunaNOME + colunaACAO +linhaFIM;
 
                         $("#tblEstados tbody").append(linha);
                     }
@@ -43,9 +44,22 @@
             alert('Testando o javascript!!!');
         }
 
+        function Buscar(iduf) {
+           // alert('ID selecionado: '+ iduf);
+           var urlServico = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ iduf;
+           $.get(urlServico, function (retorno, status){
+            if (retorno == '') {
+                    alert("Erro ao obter os dados.");
+                    return
+                }
+                localStorage.setItem("ufselecionada", JSON.stringify(retorno));
+                window.location = "municipiosporuf.html";
+           }); 
+        }
     </script>
 </head>
 <body>
+    
     <h1>Estados</h1>
     <br />
     <!--<button id=" btnCarregar" type="button" onclick="CarregarEstados();">Carregar</button>-->
@@ -57,6 +71,7 @@
                 <th>ID</th>
                 <th>Sigla</th>
                 <th>Nome</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody></tbody>
