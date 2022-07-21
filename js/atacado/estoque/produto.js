@@ -2,13 +2,13 @@ $(document).ready( function(){
     CarregarCategorias();
 
     $('#ddlCAT').change(function() {
-        //console.log( $('#ddlCAT option:selected').val());
+        $('#tblPROT tbody').empty();
         var subid = $('#ddlCAT option:selected').val();
         CarregarSubcategoria(subid);
     });
     $('#ddlSUB').change(function() {
         var protid = $('#ddlSUB option:selected').val();
-        CarregarSubcategoria(protid);
+        CarregarProduto(protid);
     });
 });
     
@@ -64,21 +64,19 @@ function CarregarSubcategoria(idsub) {
             else{
                 for (var i = 0; i <retorno.length; i++){
                     var produto = retorno[i];
-                    var produto = produto.idProduto;
-                    var idSubcategoria = subcategoria.idSubcategoria;
-                    var idCategoria = subcategoria.idCategoria;
-                    var descricao = subcategoria.descricaoSubcategoria;
-                    var situacao = subcategoria.situacao;
+                    var idProduto = produto.idProduto;
+                    var idSubcategoria = produto.idSubcategoria;
+                    var idCategoria = produto.idCategoria;
+                    var descricao = produto.descricaoProduto;
 
                     var linhaINI = "<tr>";
-                    var colunaPROT =  "<td>"+ produto +"</td>";
+                    var colunaPROT =  "<td>"+ idProduto +"</td>";
                     var colunaIDSUB = "<td>"+ idSubcategoria +"</td>";
                     var colunaIDCAT = "<td>"+ idCategoria +"</td>";
                     var colunaDESCRICAO = "<td>"+ descricao +"</td>";
-                    var colunaSITUACAO = "<td>"+ situacao +"</td>"
                     var linhaFIM = "</tr>";
 
-                    var linha = linhaINI + colunaPROT + colunaIDCAT + colunaIDSUB + colunaDESCRICAO + colunaSITUACAO +linhaFIM;
+                    var linha = linhaINI + colunaPROT + colunaIDCAT + colunaIDSUB + colunaDESCRICAO + linhaFIM;
 
                     $("#tblPROT tbody").append(linha);
                 }
